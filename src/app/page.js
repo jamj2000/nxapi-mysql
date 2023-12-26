@@ -1,33 +1,36 @@
-import { db } from '@/libs/mysql'
-
-
-async function getArticulos() {
-  try {
-    const results = await db.query('select * from articulos');
-    return results
-  } catch (error) {
-    return null
-  }
-}
-
-
+import Link from "next/link";
 
 
 export default async function Home() {
-  const articulos = await getArticulos()
-  // console.log(articulos);
+
 
   return (
     <main>
-      {
-        articulos.map( (articulo) => (
-          <div style={{ 'border' : '1px solid black',  'padding': '50px'}}>
-          <p>{articulo.nombre}</p>
-          <p>{articulo.descripcion}</p>
-          <p>{articulo.precio}</p>          
-          </div>
-        ))
-      }
+
+      <Link href='/api/testdb'>Test DB connection</Link>
+      <Link href='/api/articulos'>Lista de todos los artículos</Link>
+      <h1>API (endpoints disponibles)</h1>
+      <details>
+        <summary>GET /api/articulos</summary>
+        Obtener todos los artículos.
+      </details>
+      <details>
+        <summary>POST /api/articulos</summary>
+        Crear nuevo artículo.
+      </details>
+      <details>
+        <summary>GET /api/articulos/[id]</summary>
+        Obtener artículo por ID.
+      </details>
+      <details>
+        <summary>DELETE /api/articulos/[id]</summary>
+        Eliminar artículo por ID.
+      </details>
+      <details>
+        <summary>PUT /api/articulos/[id]</summary>
+        Modificar artículo por ID.
+      </details>
+
     </main>
   )
 }

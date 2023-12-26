@@ -1,4 +1,4 @@
-import { db } from "@/libs/mysql";
+import { db } from "@/lib/mysql";
 import { NextResponse } from "next/server";
 
 
