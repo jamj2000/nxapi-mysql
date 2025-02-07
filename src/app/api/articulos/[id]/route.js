@@ -4,8 +4,10 @@ import { NextResponse } from "next/server";
 
 
 export async function GET(request, { params }) {
+    const { id } = await params
+    
     try {
-        const result = await db.query('select * from articulos where id=?', [params.id])
+        const result = await db.query('select * from articulos where id=?', [id])
         if (result.length === 0)
             return NextResponse.json({ error: "Artículo no encontrado" }, { status: 404 })
 
@@ -19,14 +21,16 @@ export async function GET(request, { params }) {
 
 
 export async function PUT(request, { params }) {
+    const { id } = await params
+    
     try {
         const data = await request.json()
-        const result = await db.query('update articulos set ? where id=?', [data, params.id])
+        const result = await db.query('update articulos set ? where id=?', [data, id])
 
         if (result.length === 0)
             return NextResponse.json({ error: "Artículo no encontrado" }, { status: 404 })
 
-        const updatedArticulo = await db.query('select * from articulos where id=?', [params.id])
+        const updatedArticulo = await db.query('select * from articulos where id=?', [id])
         
         return NextResponse.json(updatedArticulo)
 
@@ -36,8 +40,10 @@ export async function PUT(request, { params }) {
 }
 
 export async function DELETE(request, { params }) {
+    const { id } = await params
+    
     try {
-        const result = await db.query('delete from articulos where id=?', [params.id])
+        const result = await db.query('delete from articulos where id=?', [id])
 
         if (result.affectedRows === 0)
             return NextResponse.json({ error: "Artículo no encontrado" }, { status: 404 })
